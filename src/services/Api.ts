@@ -4,7 +4,7 @@ import {City} from "../Types";
 export const fetchCities = (searchText: string): Promise<City[]> => {
   return fetchCitiesByPage(searchText, 1)
     .then(initialResponse => {
-      if(initialResponse.total_pages === 1){ return [initialResponse] }
+      if(initialResponse.total_pages <= 1){ return [initialResponse] }
       // Generates range of pages excluding first page
       // Example: if total_pages === 3 then this generates [2,3]
       const pages = Array.from(Array(initialResponse.total_pages-1)).map((e,i)=>i+2);
