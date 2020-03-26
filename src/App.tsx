@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 
 import InputSearch from "./components/InputSearch";
-import CityCell from "./components/CityCell";
+import CityList from "./components/CityList";
 
 const mockCities = [
   { city: "Abbeville", state: "Louisiana" },
@@ -12,8 +12,8 @@ const mockCities = [
 function App() {
   return (
     <div className="App">
-      <InputSearch search={searchText => console.log(searchText)}/>
-      {mockCities.map(city => <CityCell city={city} />)}
+      <InputSearch />
+      <CityList />
     </div>
   );
 }

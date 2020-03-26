@@ -1,6 +1,10 @@
 import React from "react";
+import {connect} from "react-redux";
 
 import styles from "./InputSearch.module.scss";
+import {bindActionCreators} from "redux";
+import {fetchCities} from "../../services/Api";
+import {setCities} from "../../actions/cities";
 
 type Props = {
   search(searchText:String): void
@@ -22,5 +26,16 @@ const InputSearch: React.FC<Props> = props => {
   )
 };
 
+const search = (searchText:string) => {
+  return (dispatch:any) => {
+    fetchCities(searchText).then(cities => dispatch(setCities(cities)))
+  }
+};
 
-export default InputSearch;
+const mapStateToProps = (state:any) => ({
+  cities: state.cities.cities
+});
+
+const mapDispatchToProps = (dispatch:any) => bindActionCreators({search}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(InputSearch);
