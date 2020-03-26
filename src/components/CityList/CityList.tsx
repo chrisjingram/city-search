@@ -9,7 +9,7 @@ type Props = {
 
 const CityList: React.FC<Props> = props => (
   <>
-    {props.cities.map(city => <CityCell city={city} />)}
+    {props.cities.map((city, index) => <CityCell key={`${city.city}-${city.state}-${index}`} city={city} />)}
   </>
 );
 
