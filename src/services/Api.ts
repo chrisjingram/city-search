@@ -21,7 +21,16 @@ export const handleAPIError = (error:AxiosError) => {
 };
 
 export const organiseCities = (cities: ApiCity[]): CityGroup[] => {
-  return []
+  const states = cities.reduce((states: any, city: ApiCity) => {
+    if(states.hasOwnProperty(city.state)){
+      states[city.state].push(city.city);
+      return states;
+    }else{
+      states[city.state] = [city.city]
+    }
+    return states
+  }, {});
+  return Object.keys(states).map(state => ({ state, cities: states[state] }))
 };
 
 export const fetchCities = (searchText: string): Promise<ApiCity[]> => {
