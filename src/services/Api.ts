@@ -1,5 +1,5 @@
 import axios, {AxiosError} from "axios";
-import {City} from "../Types";
+import {ApiCity, CityGroup} from "../Types";
 
 export const handleAPIError = (error:AxiosError) => {
   let message = "An unknown error occurred, please try again later.";
@@ -20,8 +20,11 @@ export const handleAPIError = (error:AxiosError) => {
   alert(message);
 };
 
+export const organiseCities = (cities: ApiCity[]): CityGroup[] => {
+  return []
+};
 
-export const fetchCities = (searchText: string): Promise<City[]> => {
+export const fetchCities = (searchText: string): Promise<ApiCity[]> => {
   return fetchCitiesByPage(searchText, 1)
     .then(initialResponse => {
       if(initialResponse.total_pages <= 1){ return [initialResponse] }

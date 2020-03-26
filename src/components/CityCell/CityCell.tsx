@@ -1,17 +1,17 @@
 import React from "react";
 
-import {City} from "../../Types";
+import {CityGroup} from "../../Types";
 import styles from "./CityCell.module.scss";
 
 type Props = {
-  city: City
+  cityGroup: CityGroup
 }
 
 const CityCell: React.FC<Props> = props => {
   return (
     <div className={styles.CityCell}>
-      <div className={styles.cityName}>{props.city.city}</div>
-      <div className={styles.stateName}>{props.city.state}</div>
+      <div className={styles.stateName}>{props.cityGroup.state}</div>
+      <div className={styles.cityNames}>{props.cityGroup.cities.join(", ")}</div>
     </div>
   )
 };

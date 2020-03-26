@@ -1,14 +1,14 @@
-import {City} from "../Types";
+import {CityGroup} from "../Types";
 import {AnyAction} from "redux";
 
 type State = {
-  cities: City[],
+  cityGroups: CityGroup[],
   loading: boolean,
   isSearched: boolean
 }
 
 const initialState: State = {
-  cities: [],
+  cityGroups: [],
   loading: false,
   isSearched: false
 };
@@ -16,7 +16,7 @@ const initialState: State = {
 export default (state=initialState, action:AnyAction) => {
   switch(action.type){
     case 'SET_CITIES': {
-      return { ...state, cities: action.cities }
+      return { ...state, cityGroups: action.cityGroups }
     }
     case 'SET_LOADING': {
       return { ...state, loading: action.loading }
