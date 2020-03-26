@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import styles from "./InputSearch.module.scss";
 import {bindActionCreators} from "redux";
 import {fetchCities, handleAPIError} from "../../services/Api";
-import {setCities, setLoading} from "../../actions/cities";
+import {setCities, setLoading, setSearched} from "../../actions/cities";
 import {ClipLoader} from "react-spinners";
 
 type Props = {
@@ -34,6 +34,7 @@ const search = (searchText:string) => {
     dispatch(setLoading(true));
     fetchCities(searchText)
       .then(cities => {
+        dispatch(setSearched(true));
         dispatch(setLoading(false));
         dispatch(setCities(cities));
       })
