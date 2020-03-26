@@ -1,9 +1,5 @@
 import axios from "axios";
-
-type City = {
-  city:string,
-  state:string
-}
+import {City} from "../Types";
 
 export const fetchCities = (searchText: string): Promise<City[]> => {
   return fetchCitiesByPage(searchText, 1)
