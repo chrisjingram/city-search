@@ -1,6 +1,8 @@
 import axios, {AxiosError} from "axios";
 import {ApiCity, CityGroup} from "../Types";
 
+// Great to see some error handling - it goes to show you must have tested a range
+// of scenarios including disabling your internet! Really nice to see.
 export const handleAPIError = (error:AxiosError) => {
   let message = "An unknown error occurred, please try again later.";
   if (error.response) {
@@ -20,6 +22,8 @@ export const handleAPIError = (error:AxiosError) => {
   alert(message);
 };
 
+// Great grouping function - nice and easy to follow, making use of
+// great es6 features
 export const organiseCities = (cities: ApiCity[]): CityGroup[] => {
   const states = cities.reduce((states: any, city: ApiCity) => {
     if(states.hasOwnProperty(city.state)){
@@ -33,6 +37,10 @@ export const organiseCities = (cities: ApiCity[]): CityGroup[] => {
   return Object.keys(states).map(state => ({ state, cities: states[state] }))
 };
 
+// A little harder to digest what's going on here - but the fact you
+// picked up on the need for pagination to start with shows a good
+// attention to detail. Where the code loses a bit of readability and
+// flow, the fact you've supplemented this with comments is a good sign.
 export const fetchCities = (searchText: string): Promise<ApiCity[]> => {
   return fetchCitiesByPage(searchText, 1)
     .then(initialResponse => {
@@ -46,8 +54,13 @@ export const fetchCities = (searchText: string): Promise<ApiCity[]> => {
         return [initialResponse, ...responses];
       }));
     })
+    // .flat() isn't guaranteed to be supported - which isn't really a problem with
+    // transpiling, however, to get the tests passing, I had to make this change.
+    //
+    // Goes to show the importance of testing!
+    //
     // Merges array of cities
-    .then(responses => [...responses.map((response: any) => response.data)].flat(1))
+    .then(responses => [].concat(...responses.map((response: any) => response.data)))
 };
 
 export const fetchCitiesByPage = (searchText:string, page:number) => {

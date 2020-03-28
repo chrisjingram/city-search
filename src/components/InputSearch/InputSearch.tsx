@@ -12,6 +12,8 @@ type Props = {
   loading: boolean
 }
 
+// My only minor suggestion here is that we can use the loading state to disable
+// the button & prevent multiple calls being out at once.
 const InputSearch: React.FC<Props> = props => {
   const [searchText, setSearchText] = React.useState("");
   const searchClicked = () => {
@@ -23,7 +25,7 @@ const InputSearch: React.FC<Props> = props => {
   return (
     <div className={styles.InputSearch}>
       <input type="text" placeholder="Enter a city..." onChange={e => setSearchText(e.target.value)} value={searchText} />
-      <button className={styles.searchButton} onClick={searchClicked}>Search</button>
+      <button className={styles.searchButton} onClick={searchClicked} disabled={props.loading}>Search</button>
       {props.loading && <div className={styles.loading}><ClipLoader size={25} loading={true} /></div>}
     </div>
   )
@@ -34,6 +36,9 @@ const search = (searchText:string) => {
     dispatch(setLoading(true));
     fetchCities(searchText)
       .then(cities => {
+        // Given that the `cities` array is only used to display the total count
+        // of cities, it's slight overkill to store them, as well as the grouped
+        // cities in the state. There's absolutely no harm in doing this however!
         dispatch(setCities(cities));
         return organiseCities(cities)
       })
